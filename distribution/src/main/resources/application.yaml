@@ -1,3 +1,5 @@
 spring:
   application:
     name: oneCoupon-distribution
+server:
+  port: 10040
