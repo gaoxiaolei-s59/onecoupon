@@ -17,6 +17,7 @@
         <module>distribution</module>
         <module>merchant-admin</module>
         <module>engine</module>
+        <module>gateway</module>
     </modules>
 
     <properties>
