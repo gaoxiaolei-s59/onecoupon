@@ -3,7 +3,7 @@ package org.puregxl.merchant.admin.config;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.puregxl.merchant.admin.common.context.UserContext;
-import org.puregxl.merchant.admin.common.context.UserInfoDto;
+import org.puregxl.merchant.admin.common.context.UserInfoDTO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
@@ -33,7 +33,7 @@ public class UserConfiguration implements WebMvcConfigurer {
 
         @Override
         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-            UserInfoDto userInfoDto = new UserInfoDto("1810518709471555585", "gxl", 1810714735922956666L);
+            UserInfoDTO userInfoDto = new UserInfoDTO("1810518709471555585", "gxl", 1810714735922956666L);
             UserContext.setUserContext(userInfoDto);
             return true;
         }

@@ -1,4 +1,4 @@
-package org.puregxl.merchant.admin.service.chain;
+package org.puregxl.merchant.admin.service.basic.chain;
 
 import org.springframework.beans.BeansException;
 import org.springframework.boot.CommandLineRunner;

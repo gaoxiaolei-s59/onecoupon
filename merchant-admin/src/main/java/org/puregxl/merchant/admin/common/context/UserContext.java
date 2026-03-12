@@ -4,13 +4,13 @@ import java.util.Optional;
 
 public class UserContext {
 
-    private static final ThreadLocal<UserInfoDto> userContext = new ThreadLocal<>();
+    private static final ThreadLocal<UserInfoDTO> userContext = new ThreadLocal<>();
 
     /**
      * 设置用户上下文
      * @param userInfoDto
      */
-    public static void setUserContext(UserInfoDto userInfoDto) {
+    public static void setUserContext(UserInfoDTO userInfoDto) {
         userContext.set(userInfoDto);
     }
 
@@ -26,8 +26,8 @@ public class UserContext {
      * @return
      */
     public static String getUserName() {
-        UserInfoDto userInfoDto = userContext.get();
-        return Optional.ofNullable(userInfoDto).map(UserInfoDto::getUserName).orElse(null);
+        UserInfoDTO userInfoDto = userContext.get();
+        return Optional.ofNullable(userInfoDto).map(UserInfoDTO::getUserName).orElse(null);
     }
 
 
@@ -36,8 +36,8 @@ public class UserContext {
      * @return
      */
     public static String getUserId() {
-        UserInfoDto userInfoDto = userContext.get();
-        return Optional.ofNullable(userInfoDto).map(UserInfoDto::getUserID).orElse(null);
+        UserInfoDTO userInfoDto = userContext.get();
+        return Optional.ofNullable(userInfoDto).map(UserInfoDTO::getUserID).orElse(null);
     }
 
     /**
@@ -45,8 +45,8 @@ public class UserContext {
      * @return
      */
     public static Long getShopNumber() {
-        UserInfoDto userInfoDto = userContext.get();
-        return Optional.ofNullable(userInfoDto).map(UserInfoDto::getShopNumber).orElse(null);
+        UserInfoDTO userInfoDto = userContext.get();
+        return Optional.ofNullable(userInfoDto).map(UserInfoDTO::getShopNumber).orElse(null);
     }
 
 }

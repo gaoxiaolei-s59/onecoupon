@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserInfoDto {
+public class UserInfoDTO {
     /**
      * 用户id
      */

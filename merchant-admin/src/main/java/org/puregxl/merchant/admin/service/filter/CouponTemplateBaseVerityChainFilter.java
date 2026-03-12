@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import org.puregxl.framework.exception.ClientException;
 import org.puregxl.merchant.admin.common.enums.DiscountTargetEnum;
 import org.puregxl.merchant.admin.dto.req.CouponTemplateSaveReqDTO;
-import org.puregxl.merchant.admin.service.chain.MerchantAdminAbstractChainHandler;
+import org.puregxl.merchant.admin.service.basic.chain.MerchantAdminAbstractChainHandler;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

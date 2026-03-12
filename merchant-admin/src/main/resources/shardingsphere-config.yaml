@@ -29,6 +29,17 @@ rules:
           standard: # 单分片键分表
             shardingColumn: shop_number # 分片键
             shardingAlgorithmName: coupon_template_table_mod # 表分片算法名称，对应 rules[0].shardingAlgorithms
+      t_coupon_template_log: # 优惠券模板表
+          # 真实存在数据库中的物理表
+        actualDataNodes: ds_${0..1}.t_coupon_template_log_${0..15}
+        databaseStrategy: # 分库策略
+          standard: # 单分片键分库
+            shardingColumn: shop_number # 分片键
+            shardingAlgorithmName: coupon_template_log_database_mod # 库分片算法名称，对应 rules[0].shardingAlgorithms
+        tableStrategy: # 分表策略
+          standard: # 单分片键分表
+            shardingColumn: shop_number # 分片键
+            shardingAlgorithmName: coupon_template_log_table_mod
     shardingAlgorithms: # 分片算法定义集合
       coupon_template_database_mod: # 优惠券分库算法定义
         type: CLASS_BASED # 根据自定义库分片算法类进行分片
@@ -43,6 +54,20 @@ rules:
           # 自定义表分片算法Class
           algorithmClassName: org.puregxl.merchant.admin.dao.sharding.TableHashModShardingAlgorithm
           strategy: standard # 分片类型，单字段分片
+      coupon_template_log_database_mod: # 优惠券分库算法定义
+        type: CLASS_BASED # 根据自定义库分片算法类进行分片
+        props: # 分片相关属性
+          # 自定义库分片算法Class
+          algorithmClassName: org.puregxl.merchant.admin.dao.sharding.DBHashModShardingAlgorithm
+          sharding-count: 16 # 分片总数量
+          strategy: standard # 分片类型，单字段分片
+      coupon_template_log_table_mod: # 优惠券分表算法定义
+        type: CLASS_BASED # 根据自定义库分片算法类进行分片
+        props: # 分片相关属性
+          # 自定义表分片算法Class
+          algorithmClassName: org.puregxl.merchant.admin.dao.sharding.TableHashModShardingAlgorithm
+          strategy: standard # 分片类型，单字段分片
+
 
 props:
   # 配置 ShardingSphere 默认打印 SQL 执行语句

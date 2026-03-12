@@ -3,7 +3,7 @@ package org.puregxl.merchant.admin.service.filter;
 import cn.hutool.core.util.ObjectUtil;
 import org.puregxl.merchant.admin.common.enums.DiscountTargetEnum;
 import org.puregxl.merchant.admin.dto.req.CouponTemplateSaveReqDTO;
-import org.puregxl.merchant.admin.service.chain.MerchantAdminAbstractChainHandler;
+import org.puregxl.merchant.admin.service.basic.chain.MerchantAdminAbstractChainHandler;
 import org.springframework.stereotype.Component;
 
 import static org.puregxl.merchant.admin.common.enums.ChainEnum.MERCHANT_ADMIN_CREATE_COUPON_TEMPLATE_KEY;

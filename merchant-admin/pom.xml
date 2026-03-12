@@ -84,6 +84,12 @@
             <version>${shardingsphere.version}</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>io.github.mouzt</groupId>
+            <artifactId>bizlog-sdk</artifactId>
+        </dependency>
+
     </dependencies>
 
 
