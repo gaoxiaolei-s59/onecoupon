@@ -36,8 +36,8 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
     @LogRecord(
             success = """
                     创建优惠券：{{#requestParam.name}}， \
-                    优惠对象：{COMMON_ENUM_PARSE{'DiscountTargetEnum' + '_' + #requestParam.target}}， \
-                    优惠类型：{COMMON_ENUM_PARSE{'DiscountTypeEnum' + '_' + #requestParam.type}}， \
+                    优惠对象：{COMMON_ENUM_FUNCTION{'DiscountTargetEnum' + '_' + #requestParam.target}}， \
+                    优惠类型：{COMMON_ENUM_FUNCTION{'DiscountTypeEnum' + '_' + #requestParam.type}}， \
                     库存数量：{{#requestParam.stock}}， \
                     优惠商品编码：{{#requestParam.goods}}， \
                     有效期开始时间：{{#requestParam.validStartTime}}， \

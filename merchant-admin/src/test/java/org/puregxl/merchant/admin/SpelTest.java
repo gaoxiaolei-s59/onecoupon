@@ -5,6 +5,7 @@ import cn.hutool.core.lang.Assert;
 import org.junit.jupiter.api.Test;
 import org.puregxl.merchant.admin.common.context.UserContext;
 import org.puregxl.merchant.admin.common.context.UserInfoDTO;
+import org.puregxl.merchant.admin.common.enums.DiscountTargetEnum;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
@@ -29,6 +30,13 @@ public class SpelTest {
         } finally {
             UserContext.removeUserContext();
         }
+
+    }
+
+    @Test
+    void testName () {
+        String simpleName = DiscountTargetEnum.class.getSimpleName();
+        System.out.println(simpleName);
 
     }
 }
