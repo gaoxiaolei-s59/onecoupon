@@ -21,4 +21,8 @@ public class FakerTest {
         String email = faker.internet().emailAddress();
         System.out.println("电子邮箱" + email);
     }
+
+    public void testGit() {
+
+    }
 }
