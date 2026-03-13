@@ -3,6 +3,7 @@ package org.puregxl.merchant.admin.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -11,6 +12,10 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.mzt.logapi.context.LogRecordContext;
 import com.mzt.logapi.starter.annotation.LogRecord;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.common.message.MessageConst;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.puregxl.framework.exception.ClientException;
 import org.puregxl.framework.exception.ServiceException;
 import org.puregxl.merchant.admin.common.constant.MerchantAdminRedisConstant;
@@ -26,22 +31,28 @@ import org.puregxl.merchant.admin.dto.resp.CouponTemplateQueryRespDTO;
 import org.puregxl.merchant.admin.service.CouponTemplateService;
 import org.puregxl.merchant.admin.service.basic.chain.MerchantAdminContext;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static org.puregxl.merchant.admin.common.constant.RocketMQConstant.COUPON_TOPIC;
 import static org.puregxl.merchant.admin.common.enums.ChainEnum.MERCHANT_ADMIN_CREATE_COUPON_TEMPLATE_KEY;
 
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper, CouponTemplateDO> implements CouponTemplateService {
 
     private final CouponTemplateMapper couponTemplateMapper;
     private final StringRedisTemplate stringRedisTemplate;
     private final MerchantAdminContext<CouponTemplateSaveReqDTO> merchantAdminContext;
+    private final RocketMQTemplate rocketMQTemplate;
 
 
     @LogRecord(
@@ -88,9 +99,33 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
         stringRedisTemplate.opsForHash().putAll(couponTemplateCacheKey, actualCacheTargetMap);
         //设置过期时间
         stringRedisTemplate.expire(couponTemplateCacheKey, 30, TimeUnit.MINUTES);
+
+        //计算消息时间戳
+        long deliverTimeStamp = couponTemplateDO.getValidEndTime().getTime();
+
+        //使用rocketmq发送定时消息
+        String couponTemplateDelayCloseTopic = COUPON_TOPIC;
+
+        JSONObject messageBody = new JSONObject();
+        messageBody.put("couponTemplateId", couponTemplateDO.getId());
+        messageBody.put("shopNumber", UserContext.getShopNumber());
+        //构建消息体
+
+        String messageKeys = UUID.randomUUID().toString();
+        Message<JSONObject> message = MessageBuilder
+                .withPayload(messageBody)
+                .setHeader(MessageConst.PROPERTY_KEYS, messageKeys)
+                .build();
+
+        SendResult sendResult;
+        try {
+            //发送延时消息
+            sendResult = rocketMQTemplate.syncSendDeliverTimeMills(couponTemplateDelayCloseTopic, message, deliverTimeStamp);
+            log.info("[生产者] 优惠券模板延时关闭 - 发送结果：{}，消息ID：{}，消息Keys：{}", sendResult.getSendStatus(), sendResult.getMsgId(), messageKeys);
+        } catch (Exception e) {
+            log.error("[生产者]-优惠卷模版-生产者-发送消息失败，消息体: {}" ,couponTemplateDO.getId(), e);
+        }
     }
-
-
 
     /**
      * 分页查询优惠卷模版

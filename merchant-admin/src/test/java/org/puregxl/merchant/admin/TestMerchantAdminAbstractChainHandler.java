@@ -9,8 +9,8 @@ import org.puregxl.merchant.admin.dao.mapper.CouponTemplateMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
@@ -45,8 +45,8 @@ public class TestMerchantAdminAbstractChainHandler {
         couponTemplateDO.setTarget(1);
         couponTemplateDO.setGoods("SPU10001");
         couponTemplateDO.setType(1);
-        couponTemplateDO.setValidStartTime(LocalDateTime.now());
-        couponTemplateDO.setValidEndTime(LocalDateTime.now().plusDays(30));
+        couponTemplateDO.setValidStartTime(new Date());
+        couponTemplateDO.setValidEndTime(new Date());
         couponTemplateDO.setStock(1000);
         couponTemplateDO.setReceiveRule("{\"limitPerUser\":1,\"receiveStartTime\":\"2026-03-10 00:00:00\",\"receiveEndTime\":\"2026-03-31 23:59:59\"}");
         couponTemplateDO.setConsumeRule("{\"minimumAmount\":100,\"discountAmount\":20,\"canStack\":false}");
@@ -75,6 +75,14 @@ public class TestMerchantAdminAbstractChainHandler {
 
         executorService.shutdown();
         executorService.awaitTermination(10, TimeUnit.MINUTES);
+    }
+
+
+    @Test
+    public void testDate() {
+        Date date = new Date();
+        System.out.println(date);
+
     }
 
 }

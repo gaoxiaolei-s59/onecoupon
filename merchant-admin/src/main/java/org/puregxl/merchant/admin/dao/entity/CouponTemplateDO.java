@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -60,12 +59,12 @@ public class CouponTemplateDO {
     /**
      * 有效期开始时间
      */
-    private LocalDateTime validStartTime;
+    private Date validStartTime;
 
     /**
      * 有效期结束时间
      */
-    private LocalDateTime validEndTime;
+    private Date validEndTime;
 
     /**
      * 库存
