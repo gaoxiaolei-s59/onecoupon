@@ -19,7 +19,7 @@ import static org.puregxl.merchant.admin.common.constant.RocketMQConstant.COUPON
 
 
 @Slf4j
-@SpringBootTest
+@SpringBootTest(properties = "merchant.admin.task.delay.timestamp=1000")
 public class productor {
 
     @Autowired
@@ -27,6 +27,9 @@ public class productor {
 
     @Autowired
     private  CouponTemplateDelayExecuteStatusProductor couponTemplateDelayExecuteStatusProductor;
+
+    @Autowired
+    private org.puregxl.merchant.admin.mq.producer.CouponTemplateDelayExecuteTaskProductor couponTemplateDelayExecuteTaskProductor;
 
 
     @Test
@@ -58,13 +61,15 @@ public class productor {
     public void main1() {
 
         CouponTemplateDelayEvent couponTemplateDelayEvent = CouponTemplateDelayEvent.builder()
-                .shopNumber(2031698838573715456L)
-                .couponTemplateId(2031698838575947784L)
+                .shopNumber(2031698838628253697L)
+                .couponTemplateId(2031698838626279428L)
                 .delayTime(System.currentTimeMillis() + 10_000).build();
 
         couponTemplateDelayExecuteStatusProductor.sendMessage(couponTemplateDelayEvent);
 
     }
+
+
 
 
 
