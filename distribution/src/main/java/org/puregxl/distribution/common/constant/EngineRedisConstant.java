@@ -3,18 +3,13 @@ package org.puregxl.distribution.common.constant;
 public class EngineRedisConstant {
 
     /**
-     * 优惠卷模版缓存key
+     * 优惠券模板缓存 Key
      */
-    public static final String COUPON_TEMPLATE_KEY = "coupon_engine:template:%s";
+    public static final String COUPON_TEMPLATE_KEY = "coupon_engine:template:%s";;
 
     /**
-     * 优惠券模板缓存分布式锁 Key
+     * 用户已领取优惠券列表模板 Key
      */
-    public static final String LOCK_COUPON_TEMPLATE_KEY = "one-coupon_engine:lock:template:%s";
-
-    /**
-     * 优惠券模板缓存空值 Key
-     */
-    public static final String COUPON_TEMPLATE_IS_NULL_KEY = "one-coupon_engine:template_is_null:%s";
+    public static final String USER_COUPON_TEMPLATE_LIST_KEY = "coupon_engine:user-template-list:%s";
 
 }

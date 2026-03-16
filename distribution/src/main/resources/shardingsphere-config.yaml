@@ -55,38 +55,38 @@ rules:
         type: CLASS_BASED # 根据自定义库分片算法类进行分片
         props: # 分片相关属性
           # 自定义库分片算法Class
-          algorithmClassName: org.puregxl.merchant.admin.dao.sharding.DBHashModShardingAlgorithm
+          algorithmClassName: org.puregxl.distribution.dao.sharding.DBHashModShardingAlgorithm
           sharding-count: 16 # 分片总数量
           strategy: standard # 分片类型，单字段分片
       coupon_template_table_mod: # 优惠券分表算法定义
         type: CLASS_BASED # 根据自定义库分片算法类进行分片
         props: # 分片相关属性
           # 自定义表分片算法Class
-          algorithmClassName: org.puregxl.merchant.admin.dao.sharding.TableHashModShardingAlgorithm
+          algorithmClassName: org.puregxl.distribution.dao.sharding.TableHashModShardingAlgorithm
           strategy: standard # 分片类型，单字段分片
       coupon_template_log_database_mod: # 优惠券分库算法定义
         type: CLASS_BASED # 根据自定义库分片算法类进行分片
         props: # 分片相关属性
           # 自定义库分片算法Class
-          algorithmClassName: org.puregxl.merchant.admin.dao.sharding.DBHashModShardingAlgorithm
+          algorithmClassName: org.puregxl.distribution.dao.sharding.DBHashModShardingAlgorithm
           sharding-count: 16 # 分片总数量
           strategy: standard # 分片类型，单字段分片
       coupon_template_log_table_mod: # 优惠券分表算法定义
         type: CLASS_BASED # 根据自定义库分片算法类进行分片
         props: # 分片相关属性
           # 自定义表分片算法Class
-          algorithmClassName: org.puregxl.merchant.admin.dao.sharding.TableHashModShardingAlgorithm
+          algorithmClassName: org.puregxl.distribution.dao.sharding.TableHashModShardingAlgorithm
           strategy: standard # 分片类型，单字段分片
       user_coupon_database_mod:
         type: CLASS_BASED
         props:
-          algorithmClassName: org.puregxl.merchant.admin.dao.sharding.DBHashModShardingAlgorithm
+          algorithmClassName: org.puregxl.distribution.dao.sharding.DBHashModShardingAlgorithm
           sharding-count: 32
           strategy: standard
       user_coupon_table_mod:
         type: CLASS_BASED
         props:
-          algorithmClassName: org.puregxl.merchant.admin.dao.sharding.TableHashModShardingAlgorithm
+          algorithmClassName: org.puregxl.distribution.dao.sharding.TableHashModShardingAlgorithm
           strategy: standard
 
 

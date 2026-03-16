@@ -164,7 +164,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
         couponTemplateDO.setStock(couponTemplateDO.getStock() + requestParam.getNumber());
         LogRecordContext.putVariable("modifiedData", JSON.toJSONString(couponTemplateDO));
         // 设置数据库优惠券模板增加库存发行量
-        int increased = couponTemplateMapper.increaseNumberCouponTemplate(UserContext.getShopNumber(), requestParam.getCouponTemplateId(), requestParam.getNumber());
+        int increased = couponTemplateMapper.increaseNumberCouponTemplate(UserContext.getShopNumber(), Long.parseLong(requestParam.getCouponTemplateId()), requestParam.getNumber());
         if (!SqlHelper.retBool(increased)) {
             throw new ServiceException("优惠券模板增加发行量失败");
         }

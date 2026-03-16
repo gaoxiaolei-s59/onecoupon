@@ -64,7 +64,7 @@ public class CouponTaskServiceImpl extends ServiceImpl<CouponTaskMapper, CouponT
         // 验证非空参数
         // 验证参数是否正确，比如文件地址是否为我们期望的格式等
         // 验证参数依赖关系，比如选择定时发送，发送时间是否不为空等
-        CouponTemplateQueryRespDTO couponTemplate = couponTemplateService.findCouponTemplate(requestParam.getCouponTemplateId());
+        CouponTemplateQueryRespDTO couponTemplate = couponTemplateService.findCouponTemplateById(requestParam.getCouponTemplateId());
         if (couponTemplate == null) {
             throw new ClientException("优惠券模板不存在，请检查提交信息是否正确");
         }
@@ -80,6 +80,7 @@ public class CouponTaskServiceImpl extends ServiceImpl<CouponTaskMapper, CouponT
                         ? CouponTaskStatusEnum.IN_PROGRESS.getStatus()
                         : CouponTaskStatusEnum.PENDING.getStatus()
         );
+
 
         // 保存优惠券推送任务记录到数据库（先执行插入操作）
         couponTaskMapper.insert(couponTaskDO);
