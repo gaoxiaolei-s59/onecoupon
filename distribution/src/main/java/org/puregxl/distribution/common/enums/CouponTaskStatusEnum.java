@@ -32,17 +32,40 @@
  * 本软件受到[山东流年网络科技有限公司]及其许可人的版权保护。
  */
 
-package org.puregxl.distribution;
+package org.puregxl.distribution.common.enums;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@SpringBootApplication
-@MapperScan("org.puregxl.distribution.dao.mapper")
-public class DistributionApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(DistributionApplication.class, args);
-    }
+@RequiredArgsConstructor
+public enum CouponTaskStatusEnum {
+
+    /**
+     * 待执行
+     */
+    PENDING(0),
+
+    /**
+     * 执行中
+     */
+    IN_PROGRESS(1),
+
+    /**
+     * 执行失败
+     */
+    FAILED(2),
+
+    /**
+     * 执行成功
+     */
+    SUCCESS(3),
+
+    /**
+     * 取消
+     */
+    CANAL(4);
+
+    @Getter
+    private final int status;
 }

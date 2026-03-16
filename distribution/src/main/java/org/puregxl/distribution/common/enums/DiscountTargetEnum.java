@@ -32,17 +32,48 @@
  * 本软件受到[山东流年网络科技有限公司]及其许可人的版权保护。
  */
 
-package org.puregxl.distribution;
+package org.puregxl.distribution.common.enums;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@SpringBootApplication
-@MapperScan("org.puregxl.distribution.dao.mapper")
-public class DistributionApplication {
+/**
+ * 优惠券优惠对象枚举
+ * <p>
+ * 作者：马丁
+ * 加项目群：早加入就是优势！500人内部项目群，分享的知识总有你需要的 <a href="https://t.zsxq.com/cw7b9" />
+ * 开发时间：2024-07-09
+ */
+@RequiredArgsConstructor
+public enum DiscountTargetEnum {
 
-    public static void main(String[] args) {
-        SpringApplication.run(DistributionApplication.class, args);
+    /**
+     * 商品专属优惠
+     */
+    PRODUCT_SPECIFIC(0, "商品专属优惠"),
+    /**
+     * 全店通用优惠
+     */
+    ALL_STORE_GENERAL(1, "全店通用优惠");
+
+    @Getter
+    private final int type;
+
+    @Getter
+    private final String value;
+
+    /**
+     * 根据 type 找到对应的 value
+     *
+     * @param type 要查找的类型代码
+     * @return 对应的描述值，如果没有找到抛异常
+     */
+    public static String findValueByType(int type) {
+        for (DiscountTargetEnum target : DiscountTargetEnum.values()) {
+            if (target.getType() == type) {
+                return target.getValue();
+            }
+        }
+        throw new IllegalArgumentException();
     }
 }

@@ -43,4 +43,4 @@ xxl-job:
     ip: 127.0.0.1
     log-retention-days: 30
     port: 19999
-  enabled: true
+  enabled: false

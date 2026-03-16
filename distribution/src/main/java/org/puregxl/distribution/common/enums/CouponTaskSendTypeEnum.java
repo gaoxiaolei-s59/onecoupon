@@ -32,17 +32,25 @@
  * 本软件受到[山东流年网络科技有限公司]及其许可人的版权保护。
  */
 
-package org.puregxl.distribution;
+package org.puregxl.distribution.common.enums;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@SpringBootApplication
-@MapperScan("org.puregxl.distribution.dao.mapper")
-public class DistributionApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(DistributionApplication.class, args);
-    }
+@RequiredArgsConstructor
+public enum CouponTaskSendTypeEnum {
+
+    /**
+     * 立即发送
+     */
+    IMMEDIATE(0),
+
+    /**
+     * 定时发送
+     */
+    SCHEDULED(1);
+
+    @Getter
+    private final int type;
 }

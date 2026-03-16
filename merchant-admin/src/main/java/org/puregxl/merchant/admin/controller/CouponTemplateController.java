@@ -75,7 +75,7 @@ public class CouponTemplateController {
     @Operation(summary = "获取优惠卷详细")
     @GetMapping("/api/merchant-admin/coupon-template/find")
     public Result<CouponTemplateQueryRespDTO> findCouponTemplate(String couponTemplateId) {
-        CouponTemplateQueryRespDTO couponTemplate = couponTemplateService.findCouponTemplate(couponTemplateId);
+        CouponTemplateQueryRespDTO couponTemplate = couponTemplateService.findCouponTemplateById(couponTemplateId);
         return Results.success(couponTemplate);
     }
 
@@ -91,4 +91,9 @@ public class CouponTemplateController {
         couponTemplateService.terminateCouponTemplate(couponTemplateId);
         return Results.success();
     }
+
+//    public Result<CouponTemplateQueryRespDTO> findCouponTemplate(CouponTemplateQueryReqDTO couponTemplateQueryReqDTO) {
+//        CouponTemplateQueryRespDTO couponTemplate = couponTemplateService.findCouponTemplate(couponTemplateQueryReqDTO);
+//        return
+//    }
 }

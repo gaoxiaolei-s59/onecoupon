@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.puregxl.framework.exception.ClientException;
 import org.puregxl.framework.exception.ServiceException;
-import org.puregxl.merchant.admin.common.constant.MerchantAdminRedisConstant;
 import org.puregxl.merchant.admin.common.context.UserContext;
 import org.puregxl.merchant.admin.common.enums.CouponTemplateStatusEnum;
 import org.puregxl.merchant.admin.dao.entity.CouponTemplateDO;
@@ -36,6 +35,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static org.puregxl.merchant.admin.common.constant.MerchantAdminRedisConstant.COUPON_TEMPLATE_KEY;
 import static org.puregxl.merchant.admin.common.enums.ChainEnum.MERCHANT_ADMIN_CREATE_COUPON_TEMPLATE_KEY;
 
 
@@ -91,7 +91,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
                         entry -> entry.getValue() != null ? entry.getValue().toString() : ""
                 ));
 
-        String couponTemplateCacheKey = String.format(MerchantAdminRedisConstant.COUPON_TEMPLATE_KEY, couponTemplateDO.getId());
+        String couponTemplateCacheKey = String.format(COUPON_TEMPLATE_KEY, couponTemplateDO.getId());
         stringRedisTemplate.opsForHash().putAll(couponTemplateCacheKey, actualCacheTargetMap);
         //设置过期时间
         stringRedisTemplate.expire(couponTemplateCacheKey, 30, TimeUnit.MINUTES);
@@ -170,7 +170,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
         }
 
         //增加库存
-        String couponTemplateCacheKey = String.format(MerchantAdminRedisConstant.COUPON_TEMPLATE_KEY, couponTemplateDO.getId());
+        String couponTemplateCacheKey = String.format(COUPON_TEMPLATE_KEY, couponTemplateDO.getId());
         stringRedisTemplate.opsForHash().increment(couponTemplateCacheKey, "stock", requestParam.getNumber());
         stringRedisTemplate.expire(couponTemplateCacheKey, 30, TimeUnit.MINUTES);
     }
@@ -181,17 +181,20 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
      * @return
      */
     @Override
-    public CouponTemplateQueryRespDTO findCouponTemplate(String couponTemplateId) {
+    public CouponTemplateQueryRespDTO findCouponTemplateById(String couponTemplateId) {
+
         LambdaQueryWrapper<CouponTemplateDO> wrappers = Wrappers.lambdaQuery(CouponTemplateDO.class)
                 .eq(CouponTemplateDO::getId, couponTemplateId)
-                .eq(CouponTemplateDO::getShopNumber, UserContext.getShopNumber());
+                .eq(CouponTemplateDO::getShopNumber, UserContext.getShopNumber())
+                .eq(CouponTemplateDO::getStatus, CouponTemplateStatusEnum.ACTIVE.getStatus());
 
         CouponTemplateDO couponTemplateDO = couponTemplateMapper.selectOne(wrappers);
+
 
         if (couponTemplateDO == null) {
             throw new ClientException("未能检查到优惠卷的存在，检查信息的合法性");
         }
-        String couponTemplateCacheKey = String.format(MerchantAdminRedisConstant.COUPON_TEMPLATE_KEY, couponTemplateDO.getId());
+        String couponTemplateCacheKey = String.format(COUPON_TEMPLATE_KEY, couponTemplateDO.getId());
         stringRedisTemplate.expire(couponTemplateCacheKey, 30, TimeUnit.MINUTES);
         return BeanUtil.toBean(couponTemplateDO, CouponTemplateQueryRespDTO.class);
     }
@@ -230,7 +233,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<CouponTemplateMapper,
         couponTemplateMapper.update(builder, updateWrapper);
 
         //设置缓存中的值为更新后的值
-        String couponTemplateCacheKey = String.format(MerchantAdminRedisConstant.COUPON_TEMPLATE_KEY, couponTemplateDO.getId());
+        String couponTemplateCacheKey = String.format(COUPON_TEMPLATE_KEY, couponTemplateDO.getId());
         stringRedisTemplate.opsForHash().put(couponTemplateCacheKey, "status", String.valueOf(CouponTemplateStatusEnum.ENDED.getStatus()));
     }
 

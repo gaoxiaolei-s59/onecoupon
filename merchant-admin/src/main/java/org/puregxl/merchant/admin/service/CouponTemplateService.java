@@ -17,7 +17,7 @@ public interface CouponTemplateService extends IService<CouponTemplateDO> {
 
     void increaseNumberCouponTemplate(CouponTemplateNumberReqDTO requestParam);
 
-    CouponTemplateQueryRespDTO findCouponTemplate(String couponTemplateId);
+    CouponTemplateQueryRespDTO findCouponTemplateById(String couponTemplateId);
 
     void terminateCouponTemplate(String couponTemplateId);
 

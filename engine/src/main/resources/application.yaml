@@ -1,5 +1,22 @@
 spring:
   application:
     name: oneCoupon-engine
+  datasource:
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    url: jdbc:shardingsphere:classpath:shardingsphere-config.yaml
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+
+
+rocketmq:
+  name-server: 127.0.0.1:9876 # NameServer 地址
+  producer:
+    group: oneCoupon_merchant-admin-service_common-message-execute_pg
+    send-message-timeout: 2000 # 发送超时时间
+    retry-times-when-send-failed: 1 # 同步发送重试次数
+    retry-times-when-send-async-failed: 1 # 异步发送重试次数
+
 server:
   port: 10020
