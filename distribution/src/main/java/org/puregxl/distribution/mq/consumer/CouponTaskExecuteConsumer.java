@@ -1,6 +1,5 @@
 package org.puregxl.distribution.mq.consumer;
 
-import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -18,8 +17,6 @@ import org.puregxl.distribution.dao.mapper.CouponTemplateMapper;
 import org.puregxl.distribution.dao.mapper.UserCouponMapper;
 import org.puregxl.distribution.mq.base.MessageWrapper;
 import org.puregxl.distribution.mq.event.CouponTaskExecuteEvent;
-import org.puregxl.distribution.service.handler.execel.CouponTaskExcelObject;
-import org.puregxl.distribution.service.handler.execel.ReadExcelDistributionListener;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -62,15 +59,15 @@ public class CouponTaskExecuteConsumer implements RocketMQListener<MessageWrappe
         }
 
         //执行消费逻辑
-        ReadExcelDistributionListener readExcelDistributionListener = new ReadExcelDistributionListener(
-                couponTemplateDO,
-                couponTemplateMapper,
-                stringRedisTemplate,
-                userCouponMapper,
-                couponTaskId,
-                couponTaskMapper
-        );
-
-        EasyExcel.read(couponTaskDO.getFileAddress(), CouponTaskExcelObject.class, readExcelDistributionListener).sheet().doRead();;
+//        ReadExcelDistributionListener readExcelDistributionListener = new ReadExcelDistributionListener(
+//                couponTemplateDO,
+//                couponTemplateMapper,
+//                stringRedisTemplate,
+//                userCouponMapper,
+//                couponTaskId,
+//                couponTaskMapper
+//        );
+//
+//        EasyExcel.read(couponTaskDO.getFileAddress(), CouponTaskExcelObject.class, readExcelDistributionListener).sheet().doRead();;
     }
 }

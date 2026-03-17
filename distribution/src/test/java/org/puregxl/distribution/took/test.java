@@ -1,0 +1,41 @@
+package org.puregxl.distribution.took;
+
+import org.junit.jupiter.api.Test;
+
+public class test {
+
+    /**
+     * 2^13 > 5000, 所以用 13 位来表示第二个字段
+     */
+    private static final int SECOND_FIELD_BITS = 13;
+
+    /**
+     * 将两个字段组合成一个int
+     */
+    public static int combineFields(boolean decrementFlag, int userRecord) {
+        return (decrementFlag ? 1 : 0) << SECOND_FIELD_BITS | userRecord;
+    }
+
+    /**
+     * 从组合的int中提取第一个字段（0或1）
+     */
+    public static boolean extractFirstField(long combined) {
+        return (combined >> SECOND_FIELD_BITS) != 0;
+    }
+
+    /**
+     * 从组合的int中提取第二个字段（1到5000之间的数字）
+     */
+    public static int extractSecondField(int combined) {
+        return combined & ((1 << SECOND_FIELD_BITS) - 1);
+    }
+
+    @Test
+    public void test() {
+        int i = combineFields(true, 300);
+        System.out.println(i);
+        System.out.println(extractFirstField(i));
+        System.out.println(extractSecondField(i));
+    }
+
+}
