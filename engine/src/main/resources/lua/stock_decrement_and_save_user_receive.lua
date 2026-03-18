@@ -1,3 +1,10 @@
+-- Lua 脚本: 检查用户是否达到优惠券领取上限并记录领取次数
+
+-- 参数列表：
+-- KEYS[1]: 优惠券库存键 (coupon_stock_key)
+-- KEYS[2]: 用户领取记录键 (user_coupon_key)
+-- ARGV[1]: 优惠券有效期结束时间 (timestamp)
+-- ARGV[2]: 用户领取上限 (limit)
 local stock = tonumber(redis.call('HGET', KEYS[1], 'stock'))
 if stock == nil or stock <= 0 then
     return {1, 0}
