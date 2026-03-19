@@ -18,9 +18,12 @@ import org.pureglx.engine.common.constant.EngineRedisConstant;
 import org.pureglx.engine.common.context.UserContext;
 import org.pureglx.engine.common.enums.CouponStatusEnum;
 import org.pureglx.engine.common.enums.RedisStockDecrementErrorEnum;
+import org.pureglx.engine.dao.entity.CouponSettlementDO;
 import org.pureglx.engine.dao.entity.UserCouponDO;
+import org.pureglx.engine.dao.mapper.CouponSettlementMapper;
 import org.pureglx.engine.dao.mapper.CouponTemplateMapper;
 import org.pureglx.engine.dao.mapper.UserCouponMapper;
+import org.pureglx.engine.dto.req.CouponCreatePaymentReqDTO;
 import org.pureglx.engine.dto.req.CouponTemplateQueryReqDTO;
 import org.pureglx.engine.dto.req.CouponTemplateRedeemReqDTO;
 import org.pureglx.engine.dto.resp.CouponTemplateQueryRespDTO;
@@ -32,6 +35,8 @@ import org.pureglx.engine.service.CouponTemplateService;
 import org.pureglx.engine.service.UserCouponService;
 import org.puregxl.framework.exception.ClientException;
 import org.puregxl.framework.exception.ServiceException;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DuplicateKeyException;
@@ -58,6 +63,8 @@ public class UserCouponServiceImpl extends ServiceImpl<UserCouponMapper, UserCou
     private final UserCouponMapper userCouponMapper;
     private final UserCouponDelayCloseProducer userCouponDelayCloseProducer;
     private final UserCouponRedeemEventProducer userCouponRedeemEventProducer;
+    private final RedissonClient redissonClient;
+    private final CouponSettlementMapper couponSettlementMapper;
 
     @Value("${one-coupon.user-coupon-list.save-cache.type}")
     private String userCouponListSaveCacheType;
@@ -274,7 +281,28 @@ public class UserCouponServiceImpl extends ServiceImpl<UserCouponMapper, UserCou
         }
     }
 
+    /**
+     * 创建核销订单 - 一般由系统调用 - 在用户使用优惠卷的时候发生
+     * @param requestParam
+     */
+    @Override
+    public void createPaymentRecord(CouponCreatePaymentReqDTO requestParam) {
+        //锁住优惠卷
+        RLock lock = redissonClient.getLock(String.format(EngineRedisConstant.LOCK_COUPON_SETTLEMENT_KEY, requestParam.getCouponId()));
+        boolean tryLock = lock.tryLock();
+        if (!tryLock) {
+            throw new ClientException("正在创建优惠券结算单，请稍候再试");
+        }
 
+        try {
+
+        } catch () {
+
+        } finally {
+
+        }
+
+    }
 
 
 }

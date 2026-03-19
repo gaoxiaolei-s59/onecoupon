@@ -3,6 +3,7 @@ package org.pureglx.engine.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.pureglx.engine.dto.req.CouponCreatePaymentReqDTO;
 import org.pureglx.engine.dto.req.CouponTemplateRedeemReqDTO;
 import org.pureglx.engine.service.UserCouponService;
 import org.puregxl.framework.result.Result;
@@ -32,6 +33,13 @@ public class UserCouponController {
     @PostMapping("/api/engine/user-coupon/redeem-v2")
     public Result<Void> redeemUserCouponByMQ(@RequestBody CouponTemplateRedeemReqDTO requestParam) {
         userCouponService.redeemUserCouponByMQ(requestParam);
+        return Results.success();
+    }
+
+    @Operation(summary = "创建用户优惠券结算单", description = "用户下单时锁定使用的优惠券，一般由订单系统发起调用")
+    @PostMapping("/api/engine/user-coupon/create-payment-record")
+    public Result<Void> createPaymentRecord(@RequestBody CouponCreatePaymentReqDTO requestParam) {
+        userCouponService.createPaymentRecord(requestParam);
         return Results.success();
     }
 

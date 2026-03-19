@@ -27,4 +27,10 @@ public class EngineRedisConstant {
      */
     public static final String USER_COUPON_TEMPLATE_LIST_KEY = "coupon_engine:user-template-list:%s";
 
+
+    /**
+     * 优惠券结算单分布式锁 Key
+     */
+    public static final String LOCK_COUPON_SETTLEMENT_KEY = "one-coupon_engine:lock:coupon-settlement:%d";
+
 }
