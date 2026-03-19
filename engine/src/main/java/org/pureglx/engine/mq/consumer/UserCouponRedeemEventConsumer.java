@@ -26,8 +26,10 @@ import org.pureglx.engine.mq.event.UserCouponDelayCloseEvent;
 import org.pureglx.engine.mq.event.UserCouponRedeemEvent;
 import org.pureglx.engine.mq.producer.UserCouponDelayCloseProducer;
 import org.puregxl.framework.exception.ServiceException;
+import org.puregxl.framework.indepence.NoMQDuplicateConsume;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -46,6 +48,14 @@ public class UserCouponRedeemEventConsumer implements RocketMQListener<MessageWr
     private final StringRedisTemplate stringRedisTemplate;
     private final UserCouponDelayCloseProducer userCouponDelayCloseProducer;
 
+
+
+    @Transactional(rollbackFor = Exception.class)
+    @NoMQDuplicateConsume(
+            keyPrefix = "user-coupon-redeem:",
+            key = "#messageWrapper.keys",
+            keyTimeout = 600
+    )
     @Override
     public void onMessage(MessageWrapper<UserCouponRedeemEvent> userCouponRedeemEventMessageWrapper) {
         //打印日志
