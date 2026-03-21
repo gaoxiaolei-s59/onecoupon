@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.pureglx.engine.dto.req.CouponCreatePaymentReqDTO;
+import org.pureglx.engine.dto.req.CouponCreateProcessPaymentDTO;
+import org.pureglx.engine.dto.req.CouponProcessRefundReqDTO;
 import org.pureglx.engine.dto.req.CouponTemplateRedeemReqDTO;
 import org.pureglx.engine.service.UserCouponService;
 import org.puregxl.framework.result.Result;
@@ -40,6 +42,21 @@ public class UserCouponController {
     @PostMapping("/api/engine/user-coupon/create-payment-record")
     public Result<Void> createPaymentRecord(@RequestBody CouponCreatePaymentReqDTO requestParam) {
         userCouponService.createPaymentRecord(requestParam);
+        return Results.success();
+    }
+
+    @Operation(summary = "核销优惠卷", description = "支付完成结算优惠卷")
+    @PostMapping("/api/engine/user-coupon/create-payment-record")
+    public Result<Void> processPayment(@RequestBody CouponCreateProcessPaymentDTO requestParam) {
+        userCouponService.processPayment(requestParam);
+        return Results.success();
+    }
+
+
+    @Operation(summary = "退款优惠卷", description = "退款优惠卷")
+    @PostMapping
+    public Result<Void> processRefund(@RequestBody CouponProcessRefundReqDTO requestParam) {
+        userCouponService.processRefund(requestParam);
         return Results.success();
     }
 

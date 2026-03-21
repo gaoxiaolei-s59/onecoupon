@@ -27,7 +27,12 @@ public class CouponSettlementDO {
     /**
      * '用户ID'
      */
-    private Long userID;
+    private Long userId;
+
+    /**
+     * 优惠券id
+     */
+    private Long couponId;
 
     /**
      * 状态 0：锁定 1：已取消 2：已支付 3：已退款'

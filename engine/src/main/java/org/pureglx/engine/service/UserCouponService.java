@@ -3,6 +3,8 @@ package org.pureglx.engine.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.pureglx.engine.dao.entity.UserCouponDO;
 import org.pureglx.engine.dto.req.CouponCreatePaymentReqDTO;
+import org.pureglx.engine.dto.req.CouponCreateProcessPaymentDTO;
+import org.pureglx.engine.dto.req.CouponProcessRefundReqDTO;
 import org.pureglx.engine.dto.req.CouponTemplateRedeemReqDTO;
 
 public interface UserCouponService extends IService<UserCouponDO> {
@@ -11,4 +13,8 @@ public interface UserCouponService extends IService<UserCouponDO> {
     void redeemUserCouponByMQ(CouponTemplateRedeemReqDTO requestParam);
 
     void createPaymentRecord(CouponCreatePaymentReqDTO requestParam);
+
+    void processPayment(CouponCreateProcessPaymentDTO requestParam);
+
+    void processRefund(CouponProcessRefundReqDTO requestParam);
 }

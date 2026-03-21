@@ -51,7 +51,7 @@ rules:
             shardingColumn: user_id
             shardingAlgorithmName: user_coupon_table_mod
       t_coupon_settlement:
-        actualDataNodes: ds_${0..1}.t_user_coupon_${0..15}
+        actualDataNodes: ds_${0..1}.t_coupon_settlement_${0..15}
         databaseStrategy:
           standard:
             shardingColumn: user_id
