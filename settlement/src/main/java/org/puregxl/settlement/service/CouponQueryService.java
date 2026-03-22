@@ -6,4 +6,6 @@ import org.puregxl.settlement.dto.resp.QueryCouponsRespDTO;
 
 public interface CouponQueryService {
     QueryCouponsRespDTO listQueryCoupons(QueryCouponsReqDTO requestParam);
+
+    QueryCouponsRespDTO listQueryCouponsBySync(QueryCouponsReqDTO requestParam);
 }

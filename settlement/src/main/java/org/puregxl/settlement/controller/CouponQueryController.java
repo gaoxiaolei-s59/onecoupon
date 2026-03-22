@@ -30,6 +30,6 @@ public class CouponQueryController {
     @Operation(summary = "同步查询用户可用/不可用优惠券列表")
     @PostMapping("/api/settlement/coupon-query-sync")
     public Result<QueryCouponsRespDTO> listQueryCouponsBySync(@RequestBody QueryCouponsReqDTO requestParam) {
-        return null;
+        return Results.success(couponQueryService.listQueryCouponsBySync(requestParam));
     }
 }
